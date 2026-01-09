@@ -23,7 +23,7 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
-  void _login() {
+  void _login() async {
     if (_formKey.currentState!.validate()) {
       // Handle login
       debugPrint('Username: ${usernameController.text}');
@@ -34,6 +34,12 @@ class _LoginPageState extends State<LoginPage> {
         message: 'Login successful!',
         type: SnackBarType.success,
       );
+
+      await Future.delayed(const Duration(seconds: 2));
+
+      if (!mounted) return;
+
+      Navigator.pushNamed(context, '/dashboard');
     }
   }
 

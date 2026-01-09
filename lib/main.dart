@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'screen/admin/dashboard/dashboard.dart';
 import 'screen/auth/login.dart';
 import 'screen/auth/register.dart';
 
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => const LoginPage(),
         '/regis': (context) => const RegisterPage(),
+        '/dashboard': (context) => const AdminDashboardPage(),
       },
     );
   }
