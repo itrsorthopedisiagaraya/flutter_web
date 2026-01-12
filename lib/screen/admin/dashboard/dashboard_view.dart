@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'card.dart';
+import 'widget/card.dart';
 
-class DashboardContent extends StatelessWidget {
-  const DashboardContent({super.key});
+class DashboardView extends StatelessWidget {
+  const DashboardView({super.key});
 
   @override
   Widget build(BuildContext context) {

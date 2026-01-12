@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
-import 'screen/admin/dashboard/dashboard.dart';
+import 'package:provider/provider.dart';
+import 'screen/admin/admin_layout.dart';
+import 'screen/admin/admin_state.dart';
 import 'screen/auth/login.dart';
 import 'screen/auth/register.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(create: (_) => AdminState(), child: const MyApp()),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -24,7 +28,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => const LoginPage(),
         '/regis': (context) => const RegisterPage(),
-        '/dashboard': (context) => const AdminDashboardPage(),
+        '/admin': (context) => const AdminLayout(),
       },
     );
   }

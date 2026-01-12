@@ -39,7 +39,7 @@ class _LoginPageState extends State<LoginPage> {
 
       if (!mounted) return;
 
-      Navigator.pushNamed(context, '/dashboard');
+      Navigator.pushNamed(context, '/admin');
     }
   }
 
