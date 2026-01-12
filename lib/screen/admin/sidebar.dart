@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../../helper.dart';
 import 'admin_state.dart';
+import 'helper.dart';
 
 class SidebarPanel extends StatelessWidget {
   const SidebarPanel({super.key});
@@ -33,39 +32,6 @@ class _SidebarContent extends StatelessWidget {
   const _SidebarContent();
 
   // 🔹 LOGOUT CONFIRM
-  void _confirmLogout(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (_) => AlertDialog(
-        icon: const Icon(Icons.logout),
-        title: const Text('Confirm Logout'),
-        content: const Text('Are you sure you want to logout?'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
-          ),
-          FilledButton(
-            onPressed: () {
-              Navigator.pop(context);
-              _logout(context);
-            },
-            child: const Text('Logout'),
-          ),
-        ],
-      ),
-    );
-  }
-
-  void _logout(BuildContext context) {
-    Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
-
-    showTopToast(
-      context,
-      message: 'Logged out successfully',
-      type: SnackBarType.success,
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -178,7 +144,7 @@ class _SidebarContent extends StatelessWidget {
         ListTile(
           leading: const Icon(Icons.logout),
           title: const Text('Logout'),
-          onTap: () => _confirmLogout(context),
+          onTap: () => confirmLogout(context),
         ),
       ],
     );

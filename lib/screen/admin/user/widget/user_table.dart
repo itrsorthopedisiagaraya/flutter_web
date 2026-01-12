@@ -28,6 +28,14 @@ class UsersTable extends StatelessWidget {
               Row(
                 children: [
                   IconButton(
+                    icon: const Icon(
+                      Icons.error_outline_outlined,
+                      color: Colors.blueAccent,
+                    ),
+                    tooltip: 'Detail',
+                    onPressed: () {},
+                  ),
+                  IconButton(
                     icon: const Icon(Icons.edit),
                     tooltip: 'Edit',
                     onPressed: () {},

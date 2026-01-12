@@ -44,9 +44,6 @@ class AdminLayout extends StatelessWidget {
       drawer: isDesktop ? null : const SidebarDrawer(),
 
       floatingActionButton: _fabFor(context, page),
-      floatingActionButtonLocation: isDesktop
-          ? FloatingActionButtonLocation.endFloat
-          : FloatingActionButtonLocation.centerFloat,
 
       body: Row(
         children: [

@@ -21,6 +21,13 @@ class UsersList extends StatelessWidget {
               context,
               actions: [
                 ActionSheetItem(
+                  label: 'Detail',
+                  icon: Icons.error_outlined,
+                  onTap: () {
+                    // navigate to edit user
+                  },
+                ),
+                ActionSheetItem(
                   label: 'Edit',
                   icon: Icons.edit,
                   onTap: () {

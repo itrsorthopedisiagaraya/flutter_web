@@ -26,8 +26,6 @@ class _LoginPageState extends State<LoginPage> {
   void _login() async {
     if (_formKey.currentState!.validate()) {
       // Handle login
-      debugPrint('Username: ${usernameController.text}');
-      debugPrint('Password: ${passwordController.text}');
 
       showTopToast(
         context,

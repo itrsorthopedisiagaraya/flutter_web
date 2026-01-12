@@ -29,10 +29,6 @@ class _RegisterPageState extends State<RegisterPage> {
   void _register() async {
     if (_formKey.currentState!.validate()) {
       // Handle register
-      debugPrint('Username: ${usernameController.text}');
-      debugPrint('Fullname: ${usernameController.text}');
-      debugPrint('Email: ${usernameController.text}');
-      debugPrint('Password: ${passwordController.text}');
 
       showTopToast(
         context,
