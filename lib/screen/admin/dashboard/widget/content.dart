@@ -8,30 +8,42 @@ class DashboardContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
+    double ratio = 1.0;
 
     int columns = 2;
-    if (width >= 1200) {
+    if (width >= 1024) {
       columns = 4;
-    } else if (width >= 900) {
+      ratio = 1.5;
+    } else if (width >= 720) {
       columns = 3;
-    } else if (width >= 600) {
-      columns = 2;
+      ratio = 1.35;
     }
 
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text('Overview', style: Theme.of(context).textTheme.headlineSmall),
-          const SizedBox(height: 16),
+    return CustomScrollView(
+      slivers: [
+        SliverToBoxAdapter(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Overview',
+                style: Theme.of(context).textTheme.headlineSmall,
+              ),
+              const SizedBox(height: 16),
+            ],
+          ),
+        ),
 
-          GridView.count(
-            crossAxisCount: columns,
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            mainAxisSpacing: 16,
-            crossAxisSpacing: 16,
-            children: const [
+        SliverPadding(
+          padding: const EdgeInsets.only(bottom: 16),
+          sliver: SliverGrid(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: columns,
+              mainAxisSpacing: 16,
+              crossAxisSpacing: 16,
+              childAspectRatio: ratio, // 👈 IMPORTANT for desktop
+            ),
+            delegate: SliverChildListDelegate(const [
               StatCard(title: 'Users', value: '1,245', icon: Icons.people),
               StatCard(title: 'Appointments', value: '312', icon: Icons.event),
               StatCard(
@@ -44,10 +56,10 @@ class DashboardContent extends StatelessWidget {
                 value: '\$12,430',
                 icon: Icons.attach_money,
               ),
-            ],
+            ]),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
