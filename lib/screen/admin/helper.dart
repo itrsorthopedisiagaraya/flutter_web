@@ -1,10 +1,52 @@
 import 'package:flutter/material.dart';
 
+import '../../helper.dart';
+
 class _SidebarContent extends StatelessWidget {
+  @override
+  void _confirmLogout(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        icon: const Icon(Icons.logout),
+        title: const Text('Confirm Logout'),
+        content: const Text('Are you sure you want to logout?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancel'),
+          ),
+          FilledButton(
+            onPressed: () {
+              Navigator.pop(context); // close dialog
+              _logout(context);
+            },
+            child: const Text('Logout'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _logout(BuildContext context) async {
+    if (!context.mounted) return;
+
+    Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
+
+    showTopToast(
+      context,
+      message: 'Logged out successfully',
+      type: SnackBarType.success,
+    );
+
+    await Future.delayed(const Duration(seconds: 2));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
+        // 🔹 TOP HEADER
         Padding(
           padding: const EdgeInsets.all(16),
           child: Column(
@@ -21,20 +63,75 @@ class _SidebarContent extends StatelessWidget {
           ),
         ),
 
-        _item(Icons.dashboard_outlined, 'Dashboard'),
-        _item(Icons.people_outline, 'Users'),
-        _item(Icons.calendar_today_outlined, 'Schedule'),
-        _item(Icons.settings_outlined, 'Settings'),
+        // 🔹 SCROLLABLE MENU
+        Expanded(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                _menuItem(
+                  context,
+                  icon: Icons.dashboard_outlined,
+                  label: 'Dashboard',
+                  onTap: () {},
+                ),
 
-        const Spacer(),
+                _expandableMenu(
+                  context,
+                  icon: Icons.people_outline,
+                  label: 'Users',
+                  children: [
+                    _menuItem(context, icon: Icons.list, label: 'All Users'),
+                    _menuItem(context, icon: Icons.security, label: 'Roles'),
+                  ],
+                ),
 
-        _item(Icons.logout, 'Logout'),
+                _expandableMenu(
+                  context,
+                  icon: Icons.calendar_today_outlined,
+                  label: 'Schedule',
+                  children: [
+                    _menuItem(
+                      context,
+                      icon: Icons.event,
+                      label: 'Appointments',
+                    ),
+                    _menuItem(
+                      context,
+                      icon: Icons.date_range,
+                      label: 'Calendar',
+                    ),
+                  ],
+                ),
+
+                _expandableMenu(
+                  context,
+                  icon: Icons.settings_outlined,
+                  label: 'Settings',
+                  children: [
+                    _menuItem(context, icon: Icons.tune, label: 'General'),
+                    _menuItem(
+                      context,
+                      icon: Icons.lock_outline,
+                      label: 'Security',
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+
+        // 🔹 FIXED BOTTOM
+        const Divider(height: 1),
+
+        _menuItem(
+          context,
+          icon: Icons.logout,
+          label: 'Logout',
+          onTap: () => _confirmLogout(context),
+        ),
       ],
     );
-  }
-
-  Widget _item(IconData icon, String label) {
-    return ListTile(leading: Icon(icon), title: Text(label), onTap: () {});
   }
 }
 
@@ -69,4 +166,27 @@ class SidebarDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Drawer(child: _SidebarContent());
   }
+}
+
+Widget _menuItem(
+  BuildContext context, {
+  required IconData icon,
+  required String label,
+  VoidCallback? onTap,
+}) {
+  return ListTile(leading: Icon(icon), title: Text(label), onTap: onTap);
+}
+
+Widget _expandableMenu(
+  BuildContext context, {
+  required IconData icon,
+  required String label,
+  required List<Widget> children,
+}) {
+  return ExpansionTile(
+    leading: Icon(icon),
+    title: Text(label),
+    childrenPadding: const EdgeInsets.only(left: 16),
+    children: children,
+  );
 }
