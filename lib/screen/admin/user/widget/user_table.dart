@@ -1,6 +1,8 @@
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 
+import '../../helper.dart';
+
 class UsersTable extends StatelessWidget {
   final List<Map<String, String>> users;
 
@@ -14,18 +16,41 @@ class UsersTable extends StatelessWidget {
         DataColumn(label: Text('Name')),
         DataColumn(label: Text('Email')),
         DataColumn(label: Text('Role')),
+        DataColumn(label: Text('Actions')),
       ],
-      rows: users
-          .map(
-            (u) => DataRow(
-              cells: [
-                DataCell(Text(u['name']!)),
-                DataCell(Text(u['email']!)),
-                DataCell(Text(u['role']!)),
-              ],
+      rows: users.map((u) {
+        return DataRow(
+          cells: [
+            DataCell(Text(u['name']!)),
+            DataCell(Text(u['email']!)),
+            DataCell(Text(u['role']!)),
+            DataCell(
+              Row(
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.edit),
+                    tooltip: 'Edit',
+                    onPressed: () {},
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.delete, color: Colors.redAccent),
+                    tooltip: 'Delete',
+                    onPressed: () => showConfirmDialog(
+                      context,
+                      title: 'Delete ${u['name']}',
+                      message: 'This action cannot be undone.',
+                      confirmLabel: 'Delete',
+                      onConfirm: () {
+                        debugPrint(u['name']);
+                      },
+                    ),
+                  ),
+                ],
+              ),
             ),
-          )
-          .toList(),
+          ],
+        );
+      }).toList(),
     );
   }
 }

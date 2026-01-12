@@ -9,9 +9,24 @@ import 'user/user_view.dart';
 class AdminLayout extends StatelessWidget {
   const AdminLayout({super.key});
 
+  FloatingActionButton? _fabFor(BuildContext context, AdminPage page) {
+    switch (page) {
+      case AdminPage.users:
+        return FloatingActionButton(
+          onPressed: () {
+            // TODO: add user
+          },
+          child: const Icon(Icons.add),
+        );
+      default:
+        return null;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final isDesktop = MediaQuery.of(context).size.width >= 1024;
+    final page = context.watch<AdminState>().page;
 
     return Scaffold(
       appBar: AppBar(
@@ -27,6 +42,12 @@ class AdminLayout extends StatelessWidget {
               ),
       ),
       drawer: isDesktop ? null : const SidebarDrawer(),
+
+      floatingActionButton: _fabFor(context, page),
+      floatingActionButtonLocation: isDesktop
+          ? FloatingActionButtonLocation.endFloat
+          : FloatingActionButtonLocation.centerFloat,
+
       body: Row(
         children: [
           if (isDesktop) const SidebarPanel(),

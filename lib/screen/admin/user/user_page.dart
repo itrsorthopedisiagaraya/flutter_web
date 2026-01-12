@@ -8,10 +8,14 @@ class UsersPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Users')),
+      appBar: AppBar(title: const Text('Users')),
       body: Material(
         color: Theme.of(context).colorScheme.surfaceContainerLowest,
         child: const Padding(padding: EdgeInsets.all(16), child: UsersView()),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: const Icon(Icons.add),
       ),
     );
   }
