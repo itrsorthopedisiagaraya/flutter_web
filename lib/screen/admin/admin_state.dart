@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-enum AdminPage { dashboard, users }
+enum AdminPage { dashboard, users, poliklinik, dokter }
 
 class AdminState extends ChangeNotifier {
   AdminPage _page = AdminPage.dashboard;

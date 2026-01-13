@@ -93,6 +93,16 @@ class _SidebarContent extends StatelessWidget {
                 ),
 
                 ExpansionTile(
+                  leading: const Icon(Icons.list_alt_outlined),
+                  title: const Text('Master'),
+                  childrenPadding: const EdgeInsets.only(left: 16),
+                  children: [
+                    item(AdminPage.poliklinik, Icons.list, 'Poliklinik'),
+                    item(AdminPage.dokter, Icons.list, 'Dokter'),
+                  ],
+                ),
+
+                ExpansionTile(
                   leading: const Icon(Icons.people_outline),
                   title: const Text('Users'),
                   childrenPadding: const EdgeInsets.only(left: 16),

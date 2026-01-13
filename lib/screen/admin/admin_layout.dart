@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jadwal_dokter/screen/admin/master/poliklinik/poliklinik_view.dart';
 import 'package:provider/provider.dart';
 
 import 'admin_state.dart';
@@ -15,6 +16,13 @@ class AdminLayout extends StatelessWidget {
         return FloatingActionButton(
           onPressed: () {
             // TODO: add user
+          },
+          child: const Icon(Icons.add),
+        );
+      case AdminPage.poliklinik:
+        return FloatingActionButton(
+          onPressed: () {
+            // TODO: add poliklinik
           },
           child: const Icon(Icons.add),
         );
@@ -71,6 +79,10 @@ class _AdminContent extends StatelessWidget {
     final page = context.watch<AdminState>().page;
 
     switch (page) {
+      case AdminPage.poliklinik:
+        return const PoliklinikView();
+      case AdminPage.dokter:
+        return const PoliklinikView();
       case AdminPage.users:
         return const UsersView();
       case AdminPage.dashboard:
