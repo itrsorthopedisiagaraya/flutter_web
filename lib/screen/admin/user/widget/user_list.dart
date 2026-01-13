@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../helper.dart';
+import '../user_edit_page.dart';
 
 class UsersList extends StatelessWidget {
   final List<Map<String, String>> users;
@@ -32,6 +33,12 @@ class UsersList extends StatelessWidget {
                   icon: Icons.edit,
                   onTap: () {
                     // navigate to edit user
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => UserEditPage(userId: u['id']!),
+                      ),
+                    );
                   },
                 ),
                 ActionSheetItem(

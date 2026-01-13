@@ -2,6 +2,7 @@ import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 
 import '../../helper.dart';
+import '../user_edit_page.dart';
 
 class UsersTable extends StatelessWidget {
   final List<Map<String, String>> users;
@@ -38,7 +39,14 @@ class UsersTable extends StatelessWidget {
                   IconButton(
                     icon: const Icon(Icons.edit),
                     tooltip: 'Edit',
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => UserEditPage(userId: u['id']!),
+                        ),
+                      );
+                    },
                   ),
                   IconButton(
                     icon: const Icon(Icons.delete, color: Colors.redAccent),

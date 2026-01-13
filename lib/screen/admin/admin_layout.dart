@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'admin_state.dart';
 import 'dashboard/dashboard_view.dart';
 import 'sidebar.dart';
+import 'user/user_create_page.dart';
 import 'user/user_view.dart';
 
 class AdminLayout extends StatelessWidget {
@@ -15,7 +16,10 @@ class AdminLayout extends StatelessWidget {
       case AdminPage.users:
         return FloatingActionButton(
           onPressed: () {
-            // TODO: add user
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const UserCreatePage()),
+            );
           },
           child: const Icon(Icons.add),
         );
@@ -31,6 +35,17 @@ class AdminLayout extends StatelessWidget {
     }
   }
 
+  Text? _judul(BuildContext context, AdminPage page) {
+    switch (page) {
+      case AdminPage.users:
+        return Text('Users');
+      case AdminPage.poliklinik:
+        return Text('Poliklinik');
+      default:
+        return null;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final isDesktop = MediaQuery.of(context).size.width >= 1024;
@@ -38,7 +53,7 @@ class AdminLayout extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Admin Panel'),
+        title: isDesktop ? Text('Admin Panel') : _judul(context, page),
         automaticallyImplyLeading: !isDesktop,
         leading: isDesktop
             ? null

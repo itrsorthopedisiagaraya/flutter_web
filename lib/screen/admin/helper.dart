@@ -107,3 +107,102 @@ void _logout(BuildContext context) {
     type: SnackBarType.success,
   );
 }
+
+Future<void> showSearchablePicker(
+  BuildContext context, {
+  required String title,
+  required List<String> items,
+  String? selected,
+  required ValueChanged<String> onSelected,
+}) {
+  return showModalBottomSheet(
+    context: context,
+    isScrollControlled: true,
+    showDragHandle: true,
+    builder: (_) => _SearchablePickerSheet(
+      title: title,
+      items: items,
+      selected: selected,
+      onSelected: onSelected,
+    ),
+  );
+}
+
+class _SearchablePickerSheet extends StatefulWidget {
+  final String title;
+  final List<String> items;
+  final String? selected;
+  final ValueChanged<String> onSelected;
+
+  const _SearchablePickerSheet({
+    required this.title,
+    required this.items,
+    this.selected,
+    required this.onSelected,
+  });
+
+  @override
+  State<_SearchablePickerSheet> createState() => _SearchablePickerSheetState();
+}
+
+class _SearchablePickerSheetState extends State<_SearchablePickerSheet> {
+  String query = '';
+
+  @override
+  Widget build(BuildContext context) {
+    final filtered = widget.items
+        .where((i) => i.toLowerCase().contains(query.toLowerCase()))
+        .toList();
+
+    return Padding(
+      padding: MediaQuery.of(context).viewInsets,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          // 🔹 Header
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+            child: Text(
+              widget.title,
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+          ),
+
+          // 🔹 Search
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: TextField(
+              autofocus: true,
+              decoration: const InputDecoration(
+                hintText: 'Search...',
+                prefixIcon: Icon(Icons.search),
+              ),
+              onChanged: (v) => setState(() => query = v),
+            ),
+          ),
+
+          // 🔹 List
+          Flexible(
+            child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: filtered.length,
+              itemBuilder: (_, i) {
+                final item = filtered[i];
+                final selected = item == widget.selected;
+
+                return ListTile(
+                  title: Text(item),
+                  trailing: selected ? const Icon(Icons.check) : null,
+                  onTap: () {
+                    widget.onSelected(item);
+                    Navigator.pop(context);
+                  },
+                );
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

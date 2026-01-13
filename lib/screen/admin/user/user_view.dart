@@ -17,7 +17,12 @@ class _UsersViewState extends State<UsersView> {
 
   final List<Map<String, String>> _users = List.generate(
     20,
-    (i) => {'name': 'User $i', 'email': 'user$i@email.com', 'role': 'Admin'},
+    (i) => {
+      'id': 'id$i',
+      'name': 'User $i',
+      'email': 'user$i@email.com',
+      'role': 'Admin',
+    },
   );
 
   @override
